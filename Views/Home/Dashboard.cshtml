@@ -1,0 +1,57 @@
+@model WeddingPlanner.Models.DashboardWrapper
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Planner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Welcome to the Wedding Planner</h1>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <tr>
+                    <th scope="col">Wedding</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Guest</th>
+                    <th scope="col">Action</th>
+                </tr>
+                @foreach (var wedding in Model.AllWeddings)
+                {
+                    <tr>
+                        <td><a href="/weddings/@wedding.WeddingId">@wedding.One and @wedding.Two</a></td>
+                        <td>@wedding.Date.Value.ToString("MMM dd yyyy")</td>
+                        <td>
+                            
+                                @wedding.GuestList.Count
+                            
+                        </td>
+                        <td>
+                            @if(wedding.WeddingPlanner.UserId == Model.LoggedInUser.UserId)
+                            {
+                                <a href="weddings/@wedding.WeddingId/delete">Delete</a>
+                            }
+                            @if(wedding.GuestList.Any(r => r.UserId == Model.LoggedInUser.UserId))
+                            {
+                                <a href="/weddings/@wedding.WeddingId/RemoveGuest">Un-RSVP</a>
+                            }
+                            else
+                            {
+                                <a href="/weddings/@wedding.WeddingId/AddGuest">RSVP</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="form-group row">
+            <a href="/weddings/new"><input type="submit" value="New Wedding" class="col-sm-12 offset-sm-4 btn btn-primary"></a>
+        </div>
+    </div>
+</body>
+</html>

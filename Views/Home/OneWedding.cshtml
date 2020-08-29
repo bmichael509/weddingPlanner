@@ -1,0 +1,27 @@
+@model WeddingPlanner.Models.Wedding
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Planner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>@Model.One and @Model.Two's Wedding</h1>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+        <div class="row offset-sm-4">
+            <h2>Date: @Model.Date.Value.ToString("MMM dd yyyy")</h2>
+            <div class="col-sm-8 offset-sm-4">
+                <h2>Guests: </h2>
+                @foreach (var attendee in Model.GuestList)
+                {
+                    <p>@attendee.Attendee.FirstName @attendee.Attendee.LastName</p>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
